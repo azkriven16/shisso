@@ -22,7 +22,7 @@ export default function Comments() {
   return (
     <div className="mx-auto mt-8">
       <div className="rounded-lg py-4">
-        <h2 className="text-xl md:text-2xl font-semibold">Comments</h2>
+        <h2 className="text-lg md:text-xl font-semibold">Comments</h2>
 
         {comments.map((comment) => (
           <div key={comment.id} className="mt-4 p-4 border-t border">

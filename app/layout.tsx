@@ -7,6 +7,7 @@ import { siteConfig } from "@/lib/constants";
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { Footer } from "@/components/footer";
+import TRPCProvider from "@/providers/trpc-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -60,11 +61,13 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Navbar />
-            <main className="flex min-h-screen flex-col items-center pt-16">
-              {children}
-            </main>
-            <Footer />
+            <TRPCProvider>
+              <Navbar />
+              <main className="flex min-h-screen flex-col items-center pt-16">
+                {children}
+              </main>
+              <Footer />
+            </TRPCProvider>
           </ThemeProvider>
         </body>
       </html>

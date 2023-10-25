@@ -1,3 +1,4 @@
+import { ITitle } from "@/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -6,12 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 type TextObject = {
-  text:
-    | string
-    | {
-        userPreferred?: string;
-        romaji?: string;
-      };
+  text: string | any;
 };
 
 export function getTitle({ text = "" }: TextObject) {

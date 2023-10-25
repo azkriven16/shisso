@@ -1,15 +1,12 @@
 "use client";
-import Error from "@/components/error";
 import Navbar from "../../_components/navbar";
 import Grid from "@/components/anime/grid";
+import Error from "@/components/error";
 import MaxWidthWrapper from "@/components/max-width-wrapper";
-import { useGetGogo } from "@/lib/anime";
-import { GetGogoType } from "@/types";
+import { useGetPopular } from "@/lib/anime";
 
-export default function DashboardPage() {
-  const { data, isLoading, isError } = useGetGogo({
-    type: GetGogoType.TopAiring,
-  });
+export default function NewPage() {
+  const { data, isLoading, isError } = useGetPopular({ page: 1 });
 
   if (isError) return <Error />;
 

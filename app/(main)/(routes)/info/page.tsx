@@ -1,41 +1,50 @@
-import React from "react";
+"use client";
 import Banner from "../../_components/banner";
 import MaxWidthWrapper from "@/components/max-width-wrapper";
 import Grid from "@/components/anime/grid";
 import Comments from "@/components/anime/comments";
-import { Bookmark, Heart } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import Interactions from "@/components/interactions";
+import { useSearchParams } from "next/navigation";
+import { useGetAnimeInfo } from "@/lib/anime";
+import { cleanHtmlTags, getTitle } from "@/lib/utils";
+import Error from "@/components/error";
+import { Spinner } from "@/components/spinner";
 
 export default function InfoPage() {
+  const searchParams = useSearchParams();
+
+  const anime = searchParams.get("anime");
+
+  const { data, isLoading, isError } = useGetAnimeInfo(anime as string);
+
+  if (isError) return <Error />;
+
+  if (isLoading)
+    return (
+      <div className="py-36">
+        <Spinner size="lg" />
+      </div>
+    );
+
   return (
     <>
-      <Banner hasCover />
+      <Banner data={data} />
       <MaxWidthWrapper>
         <div>
           <h1 className="font-semibold text-xl md:text-2xl">
-            Shingeki no Kyojin
+            {getTitle({ text: data?.title })}
           </h1>
           <div className="flex justify-between flex-col md:flex-row gap-5">
             <div className="md:w-2/3">
               <p className="text-sm text-muted-foreground line-clamp-3">
-                Several hundred years ago, humans were nearly exterminated by
-                titans. Titans are typically several stories tall, seem to have
-                no intelligence, devour human beings and, worst of all, seem to
-                do it for the pleasure rather than as a food source.
+                {cleanHtmlTags({ text: data?.description })}
               </p>
             </div>
-            <div className="flex-grow flex md:justify-end gap-3 mt-3">
-              <Button variant="ghost" className="flex items-center gap-2">
-                <Heart /> Favorite
-              </Button>
-              <Button variant="ghost" className="flex items-center gap-2">
-                <Bookmark /> Bookmark
-              </Button>
-            </div>
+            <Interactions />
           </div>
         </div>
         <div className="mt-10">
-          <Grid loading={false} text="Episodes" />
+          <Grid data={data} hasEpisodes loading={isLoading} text="Episodes" />
         </div>
         <Comments />
       </MaxWidthWrapper>

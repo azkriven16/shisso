@@ -6,9 +6,9 @@ import MaxWidthWrapper from "@/components/max-width-wrapper";
 import { useGetGogo } from "@/lib/anime";
 import { GetGogoType } from "@/types";
 
-export default function DashboardPage() {
+export default function NewPage() {
   const { data, isLoading, isError } = useGetGogo({
-    type: GetGogoType.TopAiring,
+    type: GetGogoType.RecentEpisodes,
   });
 
   if (isError) return <Error />;

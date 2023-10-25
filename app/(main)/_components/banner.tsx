@@ -1,10 +1,12 @@
+import { IAnimeResult } from "@/types";
 import Image from "next/image";
 
 interface BannerProps {
-  hasCover: boolean;
+  hasCover?: boolean;
+  data: IAnimeResult | undefined;
 }
 
-export default function Banner({ hasCover }: BannerProps) {
+export default function Banner({ hasCover, data }: BannerProps) {
   return (
     <div className="w-screen relative h-52">
       {hasCover ? (
@@ -17,7 +19,7 @@ export default function Banner({ hasCover }: BannerProps) {
       ) : (
         <>
           <Image
-            src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx16498-C6FPmWm59CyP.jpg"
+            src={data?.image!}
             height={370}
             width={370}
             alt="Banner"

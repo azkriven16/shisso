@@ -4,17 +4,11 @@ import { cn } from "@/lib/utils";
 import { ModeToggle } from "./mode-toggle";
 import MaxWidthWrapper from "./max-width-wrapper";
 import { Logo } from "./logo";
-import {
-  SignInButton,
-  SignOutButton,
-  UserButton,
-  useAuth,
-  useUser,
-} from "@clerk/nextjs";
+import { SignInButton, SignOutButton, useAuth, useUser } from "@clerk/nextjs";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { siteConfig } from "@/lib/constants";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -77,7 +71,7 @@ export default function Navbar() {
                   <DropdownMenuItem>
                     {user?.emailAddresses[0].emailAddress}
                   </DropdownMenuItem>
-                  <SignOutButton>
+                  <SignOutButton signOutCallback={() => redirect("/")}>
                     <DropdownMenuItem>Sign Out</DropdownMenuItem>
                   </SignOutButton>
                 </DropdownMenuContent>

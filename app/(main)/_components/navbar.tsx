@@ -1,5 +1,6 @@
+"use client";
 import MaxWidthWrapper from "@/components/max-width-wrapper";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ChevronDown, Search } from "lucide-react";
 import {
@@ -10,15 +11,29 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { usePathname } from "next/navigation";
+import { NavItemsData } from "@/lib/constants";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export default function Navbar() {
+  const path = usePathname();
   return (
     <MaxWidthWrapper>
       <nav className="flex items-start sm:items-center gap-5 flex-col-reverse sm:flex-row justify-between">
         <div className="space-x-2 space-y-2">
-          <Button>New</Button>
-          <Button variant="outline">Trending</Button>
-          <Button variant="outline">Popular</Button>
+          {NavItemsData.map((item) => (
+            <Link
+              className={cn(
+                buttonVariants({
+                  variant: path === item.href ? "default" : "outline",
+                })
+              )}
+              href={item.href}
+            >
+              {item.text}
+            </Link>
+          ))}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline">

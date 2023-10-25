@@ -1,11 +1,4 @@
-import { IAnimeResult } from "@/types";
-
-interface popularProps {
-  success: boolean;
-  results: IAnimeResult[];
-}
-
-export const popular: popularProps = {
+export const popular: any = {
   success: true,
   results: [
     {

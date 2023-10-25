@@ -11,17 +11,18 @@ export const siteConfig = {
 
 export const NavItemsData = [
   {
-    text: "Home",
-    href: "/",
-  },
-  {
     text: "Trending",
-    href: "/trending",
+    href: "/dashboard",
   },
   {
     text: "New",
     href: "/new",
   },
+  {
+    text: "Popular",
+    href: "/popular",
+  },
+
   {
     text: "Watchlist",
     href: "/watchlist",
