@@ -36,6 +36,7 @@ export default function Navbar() {
       )}
     >
       <MaxWidthWrapper className="flex items-center justify-between">
+        {!isSignedIn && <Logo />}
         {isSignedIn && (
           <>
             <div className="flex items-center">
