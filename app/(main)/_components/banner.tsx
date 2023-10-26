@@ -8,33 +8,26 @@ interface BannerProps {
 
 export default function Banner({ hasCover, data }: BannerProps) {
   return (
-    <div className="w-screen relative h-52">
-      {hasCover ? (
+    <div className="w-screen relative h-72">
+      <>
         <Image
-          src="https://s4.anilist.co/file/anilistcdn/media/anime/banner/16498-8jpFCOcDmneX.jpg"
-          fill
-          className="object-cover"
-          alt="Banner Image"
+          src={data?.image!}
+          height={500}
+          width={500}
+          quality={100}
+          alt="Banner"
+          className="z-10 aspect-video object-contain absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
         />
-      ) : (
-        <>
-          <Image
-            src={data?.image!}
-            height={370}
-            width={370}
-            alt="Banner"
-            className="z-10 aspect-video object-cover absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-          />
-          <Image
-            src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx16498-C6FPmWm59CyP.jpg"
-            fill
-            alt="Banner"
-            className="object-cover object-bottom"
-          />
+        <Image
+          src={data?.image!}
+          fill
+          alt="Banner"
+          className="object-cover object-bottom"
+          quality={1}
+        />
 
-          <div className="absolute bg-black/50 inset-0 backdrop-blur-sm" />
-        </>
-      )}
+        <div className="absolute bg-black/50 inset-0 backdrop-blur-sm" />
+      </>
     </div>
   );
 }

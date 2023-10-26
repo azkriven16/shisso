@@ -8,23 +8,11 @@ export const Hero = () => {
           <Image
             src="/boxes.png"
             fill
-            className="object-contain dark:hidden"
-            alt="Box"
-          />
-          <Image
-            src="/boxes.png"
-            fill
             className="object-contain hidden dark:block invert"
             alt="Box"
           />
         </div>
         <div className="relative h-[400px] w-[400px] hidden md:block">
-          <Image
-            src="/surprise-box.png"
-            fill
-            className="object-contain dark:hidden"
-            alt="Reading"
-          />
           <Image
             src="/surprise-box.png"
             fill

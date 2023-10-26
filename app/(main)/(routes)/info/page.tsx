@@ -34,13 +34,15 @@ export default function InfoPage() {
           <h1 className="font-semibold text-xl md:text-2xl">
             {getTitle({ text: data?.title })}
           </h1>
+          <div className="my-5">
+            <Interactions anime={data} />
+          </div>
           <div className="flex justify-between flex-col md:flex-row gap-5">
             <div className="md:w-2/3">
               <p className="text-sm text-muted-foreground line-clamp-3">
                 {cleanHtmlTags({ text: data?.description })}
               </p>
             </div>
-            <Interactions />
           </div>
         </div>
         <div className="mt-10">

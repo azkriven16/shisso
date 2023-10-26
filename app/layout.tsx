@@ -8,7 +8,18 @@ import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { Footer } from "@/components/footer";
 import TRPCProvider from "@/providers/trpc-provider";
+import { Toaster } from "sonner";
 
+// ...
+
+function App() {
+  return (
+    <div>
+      <Toaster />
+      <button onClick={() => toast("My first toast")}>Give me a toast</button>
+    </div>
+  );
+}
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

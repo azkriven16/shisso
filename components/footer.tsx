@@ -8,7 +8,7 @@ export const Footer = () => {
       <div className="hidden sm:block">
         <Logo />
       </div>
-      <div className="md:ml-auto w-full justify-between md:justify-end flex items-center gap-x-2 text-muted-foreground">
+      <div className="md:ml-auto w-full justify-between sm:justify-end flex items-center gap-x-2 text-muted-foreground">
         <Button variant="ghost" size="sm">
           Privacy Policy
         </Button>

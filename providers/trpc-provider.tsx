@@ -4,7 +4,7 @@ import { PropsWithChildren, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { trpc } from "@/app/_trpc/client";
 import { httpBatchLink } from "@trpc/client";
-
+import { Toaster } from "sonner";
 export default function TRPCProvider({ children }: PropsWithChildren) {
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
@@ -19,6 +19,7 @@ export default function TRPCProvider({ children }: PropsWithChildren) {
 
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <Toaster position="top-center" />
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </trpc.Provider>
   );

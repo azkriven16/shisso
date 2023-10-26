@@ -42,7 +42,7 @@ export default function VideoPage() {
           <h1 className="font-semibold text-xl md:text-2xl">
             {getTitle({ text: info?.title })}
           </h1>
-          <Interactions />
+          {info && <Interactions anime={info} />}
 
           <div className="flex justify-between flex-col md:flex-row gap-5">
             <div className="md:w-2/3">

@@ -3,17 +3,16 @@ import { TRPCError, initTRPC } from "@trpc/server";
 
 const t = initTRPC.create();
 
-const middleware = t.middleware;
-
-const isAuth = middleware(async (opts) => {
-  const { userId } = auth();
-  if (!userId) {
+const isAuthed = t.middleware(async ({ next }) => {
+  const { userId, user } = auth();
+  if (!userId && !user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
 
-  return opts.next({
+  return next({
     ctx: {
       userId,
+      user,
     },
   });
 });
@@ -21,4 +20,4 @@ const isAuth = middleware(async (opts) => {
 export const router = t.router;
 
 export const publicProcedure = t.procedure;
-export const privateProcedure = t.procedure.use(isAuth);
+export const protectedProcedure = t.procedure.use(isAuthed);

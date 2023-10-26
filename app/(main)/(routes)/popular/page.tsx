@@ -1,5 +1,4 @@
 "use client";
-import Navbar from "../../_components/navbar";
 import Grid from "@/components/anime/grid";
 import Error from "@/components/error";
 import MaxWidthWrapper from "@/components/max-width-wrapper";
@@ -12,7 +11,6 @@ export default function NewPage() {
 
   return (
     <>
-      <Navbar />
       <MaxWidthWrapper>
         <Grid data={data} loading={isLoading} text="New Anime" />
       </MaxWidthWrapper>

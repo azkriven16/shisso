@@ -1,6 +1,5 @@
 "use client";
 import Error from "@/components/error";
-import Navbar from "../../_components/navbar";
 import Grid from "@/components/anime/grid";
 import MaxWidthWrapper from "@/components/max-width-wrapper";
 import { useGetGogo } from "@/lib/anime";
@@ -15,7 +14,6 @@ export default function DashboardPage() {
 
   return (
     <>
-      <Navbar />
       <MaxWidthWrapper>
         <Grid data={data} loading={isLoading} text="New Anime" />
       </MaxWidthWrapper>
