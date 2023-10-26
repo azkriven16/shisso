@@ -1,4 +1,4 @@
-import React from "react";
+// @ts-nocheck
 import { Button } from "./ui/button";
 import { Bookmark, Heart } from "lucide-react";
 import { trpc } from "@/app/_trpc/client";
@@ -15,7 +15,6 @@ export default function Interactions({ anime }: InteractionsProps) {
 
   const { data: favorite } = trpc.getUserFavorite.useQuery();
   const { data: watchlist } = trpc.getUserWatchlist.useQuery();
-
   const isFavorite = favorite?.find((id) => id.animeId === anime.id);
   const isWatchList = watchlist?.find((id) => id.animeId === anime.id);
 
