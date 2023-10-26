@@ -5,13 +5,21 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { trpc } from "@/app/_trpc/client";
 import { httpBatchLink } from "@trpc/client";
 import { Toaster } from "sonner";
+
 export default function TRPCProvider({ children }: PropsWithChildren) {
   const [queryClient] = useState(() => new QueryClient());
+
+  // Define the URL based on the environment (localhost or production)
+  const apiUrl =
+    process.env.NODE_ENV === "production"
+      ? "https://shisso.vercel.app/api/trpc"
+      : "http://localhost:3000/api/trpc";
+
   const [trpcClient] = useState(() =>
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: "http://localhost:3000/api/trpc",
+          url: apiUrl, // Use the apiUrl determined by the environment
         }),
       ],
     })
