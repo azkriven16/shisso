@@ -11,7 +11,7 @@ export default function TRPCProvider({ children }: PropsWithChildren) {
 
   const apiUrl =
     process.env.NODE_ENV === "production"
-      ? "https://your-production-url.com/api/trpc"
+      ? "https://shisso.vercel.app/api/trpc"
       : "http://localhost:3000/api/trpc";
   console.log(apiUrl);
   const [trpcClient] = useState(() =>
