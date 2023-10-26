@@ -9,12 +9,11 @@ import { Toaster } from "sonner";
 export default function TRPCProvider({ children }: PropsWithChildren) {
   const [queryClient] = useState(() => new QueryClient());
 
-  // Define the URL based on the environment (localhost or production)
   const apiUrl =
     process.env.NODE_ENV === "production"
-      ? "https://shisso.vercel.app/api/trpc"
+      ? "https://your-production-url.com/api/trpc"
       : "http://localhost:3000/api/trpc";
-
+  console.log(apiUrl);
   const [trpcClient] = useState(() =>
     trpc.createClient({
       links: [
