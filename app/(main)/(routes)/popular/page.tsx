@@ -12,7 +12,12 @@ export default function NewPage() {
   return (
     <>
       <MaxWidthWrapper>
-        <Grid data={data} loading={isLoading} text="New Anime" />
+        <Grid
+          data={data}
+          loading={isLoading}
+          text="New Anime"
+          pagination="popular"
+        />
       </MaxWidthWrapper>
     </>
   );

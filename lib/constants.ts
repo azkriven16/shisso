@@ -24,6 +24,10 @@ export const NavItemsData = [
   },
 
   {
+    text: "Favorites",
+    href: "/favorites",
+  },
+  {
     text: "Watchlist",
     href: "/watchlist",
   },

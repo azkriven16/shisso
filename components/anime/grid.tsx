@@ -14,11 +14,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "../ui/button";
+import NoItems from "../no-items";
 interface GridProps {
   loading: boolean;
-  pagination?: boolean;
+  pagination?: string;
   hasEpisodes?: boolean;
   text: string;
+  desc?: string;
   data: IAnimeResult | undefined;
 }
 
@@ -31,6 +33,7 @@ export default function Grid({
   data,
   pagination,
   hasEpisodes,
+  desc,
 }: GridProps) {
   const skeletonArray = new Array(10).fill(null);
   const [visibleEpisodes, setVisibleEpisodes] = useState(
@@ -44,7 +47,6 @@ export default function Grid({
     const newVisibleEpisodes = visibleEpisodes + episodesPerPage;
     setVisibleEpisodes(Math.min(newVisibleEpisodes, totalEpisodes));
   };
-
   // Sort episodes based on the selected order (ascending or descending)
   const sortedEpisodes = isDescendingOrder
     ? [...data?.episodes].reverse()
@@ -52,9 +54,21 @@ export default function Grid({
   return (
     <>
       <div className="flex items-center justify-between">
-        <h1 className="text-lg md:text-xl font-semibold">{text}</h1>
-        {pagination && <Pagination />}
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold">{text}</h1>
+          <p className="text-muted-foreground text-base md:text-lg">{desc}</p>
+        </div>
+        {pagination && (
+          <div className="hidden md:flex">
+            <Pagination url={pagination} />
+          </div>
+        )}
       </div>
+      {pagination && (
+        <div className="md:hidden flex">
+          <Pagination url={pagination} />
+        </div>
+      )}
       {hasEpisodes && (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -87,7 +101,7 @@ export default function Grid({
       )}
       <div
         className={cn(
-          "h-full w-full grid gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 py-5"
+          "h-full w-full grid gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
         )}
       >
         {loading
@@ -105,6 +119,8 @@ export default function Grid({
             ))}
       </div>
 
+      {data?.results?.length === 0 && <NoItems />}
+
       {visibleEpisodes < totalEpisodes && (
         <Button
           className="show-more-button mt-5 w-full"
@@ -114,7 +130,7 @@ export default function Grid({
           Show More Episodes
         </Button>
       )}
-      {pagination && <Pagination />}
+      {pagination && <Pagination url={pagination} />}
     </>
   );
 }
@@ -124,7 +140,7 @@ function AnimeCard({ anime }: { anime: IAnimeResult }) {
     <Link href={`/info?anime=${anime.id}`} className="group">
       <div className="aspect-video rounded relative cursor-pointer">
         <Image src={anime.image!} alt="box" fill className="object-cover" />
-        <div className="inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-t from-black to-transparent z-10 absolute p-2 flex items-center justify-center">
+        <div className="inset-0 opacity-0 group-hover:opacity-100 bg-black/70 z-10 absolute p-2 flex items-center justify-center">
           <PlayCircle className="h-8 w-8 text-white" />
         </div>
       </div>

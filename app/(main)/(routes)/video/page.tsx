@@ -3,13 +3,13 @@
 import Comments from "@/components/anime/comments";
 import Grid from "@/components/anime/grid";
 import Error from "@/components/error";
-import Interactions from "@/components/interactions";
+import Interactions from "@/components/anime/interactions";
 import MaxWidthWrapper from "@/components/max-width-wrapper";
 import { Spinner } from "@/components/spinner";
-import VideoPlayer from "@/components/video-player";
 import { useGetAnimeInfo, useGetEpisode } from "@/lib/anime";
 import { cleanHtmlTags, getTitle } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
+import VideoPlayer from "@/components/anime/video-player";
 
 export default function VideoPage() {
   const searchParams = useSearchParams();

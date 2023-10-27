@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { Bookmark, Heart } from "lucide-react";
 import { trpc } from "@/app/_trpc/client";
 import { IAnimeResult } from "@/types";

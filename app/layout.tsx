@@ -4,7 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/constants";
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/navbar/index";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { Footer } from "@/components/footer";
 import TRPCProvider from "@/providers/trpc-provider";

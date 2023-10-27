@@ -3,7 +3,7 @@ import Banner from "../../_components/banner";
 import MaxWidthWrapper from "@/components/max-width-wrapper";
 import Grid from "@/components/anime/grid";
 import Comments from "@/components/anime/comments";
-import Interactions from "@/components/interactions";
+import Interactions from "@/components/anime/interactions";
 import { useSearchParams } from "next/navigation";
 import { useGetAnimeInfo } from "@/lib/anime";
 import { cleanHtmlTags, getTitle } from "@/lib/utils";
