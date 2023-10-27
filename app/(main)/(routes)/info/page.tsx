@@ -9,11 +9,12 @@ import { useGetAnimeInfo } from "@/lib/anime";
 import { cleanHtmlTags, getTitle } from "@/lib/utils";
 import Error from "@/components/error";
 import { Spinner } from "@/components/spinner";
+import Undefined from "@/components/undefined";
 
 export default function InfoPage() {
   const searchParams = useSearchParams();
 
-  const anime = searchParams.get("anime");
+  const anime = searchParams.get("anime") || "";
 
   const { data, isLoading, isError } = useGetAnimeInfo(anime as string);
 
@@ -25,6 +26,8 @@ export default function InfoPage() {
         <Spinner size="lg" />
       </div>
     );
+
+  if (!data.id) return <Undefined anime={anime} />;
 
   return (
     <>

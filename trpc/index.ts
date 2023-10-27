@@ -6,7 +6,8 @@ import { z } from "zod";
 export const appRouter = router({
   authCallback: protectedProcedure.query(async ({ ctx }) => {
     const { userId, user } = ctx;
-    if (!userId && !user) throw new TRPCError({ code: "UNAUTHORIZED" });
+    if (!userId && !user?.emailAddresses[0].emailAddress)
+      throw new TRPCError({ code: "UNAUTHORIZED" });
 
     // check if user is in db
     const dbUser = await db.user.findFirst({
@@ -20,7 +21,6 @@ export const appRouter = router({
       await db.user.create({
         data: {
           id: userId,
-          email: user?.emailAddresses[0].emailAddress || "",
         },
       });
     }
