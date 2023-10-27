@@ -71,7 +71,7 @@ export default function Interactions({ anime }: InteractionsProps) {
             title: getTitle({ text: anime.title }),
           })
         }
-        variant="secondary"
+        variant="outline"
         className="flex items-center gap-2"
       >
         <Heart className={cn("", isFavorite && "fill-red-500 text-red-500")} />{" "}
@@ -86,7 +86,7 @@ export default function Interactions({ anime }: InteractionsProps) {
             title: getTitle({ text: anime.title }),
           })
         }
-        variant="ghost"
+        variant="outline"
         className="flex items-center gap-2"
       >
         <Bookmark

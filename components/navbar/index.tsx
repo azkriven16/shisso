@@ -17,13 +17,13 @@ export default function Navbar() {
   const scrolled = useScrollTop();
   const { isSignedIn, isLoaded } = useAuth();
   const path = usePathname();
-
   return (
     <nav
       className={cn(
-        "fixed top-0 w-full z-[99999] bg-background",
+        "fixed top-0 w-full bg-background",
         scrolled && "border-b shadow-sm",
-        path !== "/" && "border-b"
+        path !== "/" && "border-b",
+        path === "/video" && "z-[99999]"
       )}
     >
       <MaxWidthWrapper className="flex items-center justify-between">
@@ -57,8 +57,8 @@ export default function Navbar() {
           </>
         )}
 
-        <div className="flex items-center gap-x-5">
-          <Search />
+        <div className="flex items-center gap-x-2 md:gap-x-5">
+          {isSignedIn && <Search />}
           {!isSignedIn && isLoaded && (
             <>
               <SignInButton mode="modal">
@@ -67,7 +67,7 @@ export default function Navbar() {
                 </Button>
               </SignInButton>
               <SignInButton mode="modal">
-                <Button size="sm">Get {siteConfig.name} free</Button>
+                <Button size="sm">Get Started</Button>
               </SignInButton>
             </>
           )}
