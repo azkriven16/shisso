@@ -19,11 +19,6 @@ export const NavItemsData = [
     href: "/new",
   },
   {
-    text: "Popular",
-    href: "/popular",
-  },
-
-  {
     text: "Favorites",
     href: "/favorites",
   },

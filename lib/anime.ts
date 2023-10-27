@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { popular } from "./popular";
 import { GetGenreType, GetGogoType, IAnimeResult } from "@/types";
 
 const baseURL = "https://api.consumet.org";
@@ -21,12 +20,6 @@ export const useGetGogo = ({
   return useQuery([type, page], async () => {
     const res = await fetch(`${baseURL}/anime/gogoanime/${type}?page=${page}`);
     return res.json();
-  });
-};
-
-export const useGetPopular = ({ page = 1 }: { page?: number }) => {
-  return useQuery(["popular", page], () => {
-    return popular;
   });
 };
 

@@ -23,7 +23,8 @@ export default function NewPage() {
         <Grid
           data={data}
           loading={isLoading}
-          text="New Anime"
+          text="Recent Release"
+          desc="Check out latest episodes"
           pagination="new"
         />
       </MaxWidthWrapper>

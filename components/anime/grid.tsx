@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "../ui/button";
 import NoItems from "../no-items";
+import { Badge } from "../ui/badge";
 interface GridProps {
   loading: boolean;
   pagination?: string;
@@ -56,7 +57,7 @@ export default function Grid({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold">{text}</h1>
-          <p className="text-muted-foreground text-base md:text-lg">{desc}</p>
+          <p className="text-muted-foreground text-sm md:text-base">{desc}</p>
         </div>
         {pagination && (
           <div className="hidden md:flex">
@@ -137,14 +138,21 @@ export default function Grid({
 
 function AnimeCard({ anime }: { anime: IAnimeResult }) {
   return (
-    <Link href={`/info?anime=${anime.id}`} className="group">
+    <Link href={`/info?anime=${anime.id}`} className="group relative">
       <div className="aspect-video rounded relative cursor-pointer">
         <Image src={anime.image!} alt="box" fill className="object-cover" />
         <div className="inset-0 opacity-0 group-hover:opacity-100 bg-black/70 z-10 absolute p-2 flex items-center justify-center">
           <PlayCircle className="h-8 w-8 text-white" />
         </div>
       </div>
-      <h3 className="line-clamp-1 mt-2">{getTitle({ text: anime.title })}</h3>
+      <h3 className="line-clamp-1 mt-2">
+        {getTitle({ text: anime.title })}
+        {anime?.episodeNumber && (
+          <Badge className="absolute right-0 top-0 rounded">
+            Episode {anime.episodeNumber}
+          </Badge>
+        )}
+      </h3>
     </Link>
   );
 }
