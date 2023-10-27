@@ -5,9 +5,10 @@ import { z } from "zod";
 
 export const appRouter = router({
   authCallback: protectedProcedure.query(async ({ ctx }) => {
-    const { userId, user } = ctx;
-    if (!userId && )
+    const { userId } = ctx;
+    if (!userId) {
       throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
 
     // check if user is in db
     const dbUser = await db.user.findFirst({
