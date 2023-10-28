@@ -15,7 +15,7 @@ export default function VideoPage() {
   const searchParams = useSearchParams();
   const anime = searchParams.get("anime");
   const episode = searchParams.get("episode");
-
+  console.log(episode?.match(/episode-(\d+)/));
   const { data: info, isLoading: infoLoading } = useGetAnimeInfo(
     anime as string
   );
@@ -40,8 +40,9 @@ export default function VideoPage() {
       <MaxWidthWrapper className="space-y-10">
         <div className="space-y-3">
           <h1 className="font-semibold text-xl md:text-2xl">
-            {getTitle({ text: info?.title })}
+            {getTitle({ text: info?.title })}{" "}
           </h1>
+          <p>{episode?.match(/episode-(\d+)/)?.[0].toUpperCase()}</p>
           {info && <Interactions anime={info} />}
 
           <div className="flex justify-between flex-col md:flex-row gap-5">

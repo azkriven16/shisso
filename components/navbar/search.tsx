@@ -16,6 +16,7 @@ import { IAnimeResult } from "@/types";
 import { cn, getTitle } from "@/lib/utils";
 import { Skeleton } from "../ui/skeleton";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Search({ qProps }: { qProps?: string }) {
   const [isCtrlKPressed, setIsCtrlKPressed] = useState(false);
@@ -23,7 +24,7 @@ export default function Search({ qProps }: { qProps?: string }) {
   const isLg = useMediaQuery("(max-width: 1024px)");
   const skeletonArray = new Array(4).fill(null);
   const debounce = useDebounce(query, 500);
-
+  const path = usePathname();
   const keyDownHandler = (event: KeyboardEvent) => {
     if (event.ctrlKey && event.key === "k") {
       event.preventDefault();
@@ -32,10 +33,11 @@ export default function Search({ qProps }: { qProps?: string }) {
   };
 
   useEffect(() => {
-    setIsCtrlKPressed(true);
-    setQuery(qProps || "");
+    if (path === "/info") {
+      setIsCtrlKPressed(true);
+      setQuery(qProps || "");
+    }
   }, [qProps]);
-
   useEffect(() => {
     window.addEventListener("keydown", keyDownHandler);
     return () => {
