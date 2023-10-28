@@ -46,7 +46,7 @@ export default function Navbar() {
                     buttonVariants({
                       variant: path === item.href ? "secondary" : "ghost",
                     }),
-                    "hidden md:inline-block mx-0.5"
+                    "hidden md:inline-flex mx-0.5"
                   )}
                   href={item.href}
                 >

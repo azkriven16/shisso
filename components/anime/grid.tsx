@@ -182,19 +182,9 @@ function EpisodeCard({
       href={`/video?anime=${info?.id}&episode=${anime?.id}`}
       className="group"
     >
-      <div className="aspect-video rounded relative cursor-pointer">
-        <Image
-          src={anime?.image! || info?.image!}
-          alt="box"
-          quality={50}
-          fill
-          className={cn("object-cover", !anime?.image && "bg-foreground")}
-        />
-        <div className="inset-0 opacity-0 group-hover:opacity-100 bg-black/70 z-10 absolute p-2 flex items-center justify-center">
-          <PlayCircle className="h-10 w-10 text-white" />
-        </div>
-      </div>
-      <h3 className="line-clamp-1 mt-2">Episode {anime?.number}</h3>
+      <Button className="w-full" variant="secondary">
+        <h3 className="line-clamp-1">Episode {anime?.number}</h3>
+      </Button>
     </Link>
   );
 }
