@@ -9,7 +9,10 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import { Footer } from "@/components/footer";
 import TRPCProvider from "@/providers/trpc-provider";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "600", "800"],
+});
 
 export const metadata: Metadata = {
   title: {

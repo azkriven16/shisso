@@ -5,7 +5,14 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getTitle } from "@/lib/utils";
-import { MoreVertical, PlayCircle, Search, Settings } from "lucide-react";
+import {
+  Heart,
+  MoreVertical,
+  PlayCircle,
+  Search,
+  Settings,
+  Trash,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { format } from "date-fns";
@@ -26,14 +33,12 @@ export default function Watchlist() {
   const skeletonArray = new Array(10).fill(null);
 
   return (
-    <MaxWidthWrapper className="my-5">
+    <MaxWidthWrapper className="my-2">
       <div className="flex justify-between">
         <div className="flex flex-col">
-          <h1 className="text-2xl md:text-3xl font-bold">
-            Watchlist - <span>{data?.length || "0"}</span>
-          </h1>
+          <h1 className="text-2xl md:text-3xl font-bold">Watchlist</h1>
           <p className="text-muted-foreground text-sm md:text-base">
-            Explore your personalized anime watchlist
+            You have {data?.length || "0"} anime in your watchlist.
           </p>
         </div>
 
@@ -76,8 +81,8 @@ export default function Watchlist() {
 
 function AnimeCard({ anime }: { anime: Favorite }) {
   return (
-    <div className="group relative">
-      <Link href={`/info?anime=${anime.animeId}`}>
+    <div className="relative">
+      <Link href={`/info?anime=${anime.animeId}`} className="group">
         <div className="aspect-video rounded relative cursor-pointer">
           <Image src={anime.imgUrl!} alt="box" fill className="object-cover" />
           <div className="inset-0 opacity-0 group-hover:opacity-100 bg-black/70 z-10 absolute p-2 flex items-center justify-center">
@@ -97,12 +102,13 @@ function AnimeCard({ anime }: { anime: Favorite }) {
             <MoreVertical className="h-4 w-4" />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel>{anime.title}</DropdownMenuLabel>
-            <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <Settings className="mr-2 h-4 w-4" />
-              <span>Settings</span>
-              <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+              <Trash className="mr-2 h-4 w-4" />
+              <span>Delete</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Heart className="mr-2 h-4 w-4" />
+              <span>Add to favorites</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
