@@ -10,7 +10,7 @@ import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import { Input } from "../ui/input";
 import { useMediaQuery, useDebounce } from "usehooks-ts";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSearch } from "@/lib/anime";
 import { IAnimeResult } from "@/types";
@@ -19,7 +19,24 @@ import { Skeleton } from "../ui/skeleton";
 import Link from "next/link";
 
 export default function Search() {
+  const [isCtrlKPressed, setIsCtrlKPressed] = useState(false);
+
+  const keyDownHandler = (event: KeyboardEvent) => {
+    if (event.ctrlKey && event.key === "k") {
+      event.preventDefault();
+      setIsCtrlKPressed((prev) => !prev);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", keyDownHandler);
+    return () => {
+      window.removeEventListener("keydown", keyDownHandler);
+    };
+  }, []);
+
   const [query, setQuery] = useState("");
+
   const isLg = useMediaQuery("(max-width: 1024px)");
   const skeletonArray = new Array(4).fill(null);
   const debounce = useDebounce(query, 500);
@@ -28,9 +45,8 @@ export default function Search() {
     episodeId: debounce,
   });
 
-  console.log(data);
   return (
-    <Dialog>
+    <Dialog open={isCtrlKPressed} onOpenChange={setIsCtrlKPressed}>
       <DialogTrigger asChild>
         <Button size={isLg ? "icon" : "default"} variant="outline">
           <SearchIcon className="h-4 w-4 lg:mr-2" />
