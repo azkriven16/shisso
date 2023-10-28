@@ -23,7 +23,6 @@ export default async function MainLayout({
   if (!dbUser) {
     return redirect("/auth-callback?origin=dashboard");
   }
-  console.log(dbUser);
 
   return <>{children}</>;
 }

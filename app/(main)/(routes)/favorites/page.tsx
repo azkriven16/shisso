@@ -12,7 +12,6 @@ import { format } from "date-fns";
 
 export default function Favorites() {
   const { data, isLoading } = trpc.getUserFavorite.useQuery();
-  console.log(data);
   const skeletonArray = new Array(10).fill(null);
 
   return (

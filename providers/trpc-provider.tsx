@@ -13,7 +13,6 @@ export default function TRPCProvider({ children }: PropsWithChildren) {
     process.env.NODE_ENV === "production"
       ? "https://shisso.vercel.app/api/trpc"
       : "http://localhost:3000/api/trpc";
-  console.log(apiUrl);
   const [trpcClient] = useState(() =>
     trpc.createClient({
       links: [

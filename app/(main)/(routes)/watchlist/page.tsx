@@ -5,15 +5,24 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getTitle } from "@/lib/utils";
-import { MoreVertical, PlayCircle, Search } from "lucide-react";
+import { MoreVertical, PlayCircle, Search, Settings } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { format } from "date-fns";
-import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+import { Favorite } from "@prisma/client";
 
 export default function Watchlist() {
   const { data, isLoading } = trpc.getUserWatchlist.useQuery();
-  console.log(data);
   const skeletonArray = new Array(10).fill(null);
 
   return (
@@ -38,33 +47,13 @@ export default function Watchlist() {
               <Skeleton key={index} className="w-full aspect-video rounded" />
             ))
           : data?.map((anime) => (
-              <Link
-                href={`/info?anime=${anime.animeId}`}
-                className="group relative"
-              >
-                <div className="aspect-video rounded relative cursor-pointer">
-                  <Image
-                    src={anime.imgUrl!}
-                    alt="box"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="inset-0 opacity-0 group-hover:opacity-100 bg-black/70 z-10 absolute p-2 flex items-center justify-center">
-                    <PlayCircle className="h-8 w-8 text-white" />
-                  </div>
-                </div>
-                <h3 className="line-clamp-1 mt-2">
-                  {getTitle({ text: anime.title })}
-                </h3>
-                {anime.createdAt && (
-                  <Badge className="absolute right-0 top-0 rounded">
-                    {format(new Date(anime.createdAt), "MMM d, yyy")}
-                  </Badge>
-                )}
-                <div className="absolute right-0 bottom-0 rounded">
-                  <MoreVertical className="h-4 w-4" />
-                </div>
-              </Link>
+              <AnimeCard
+                anime={{
+                  ...anime,
+                  createdAt: new Date(anime.createdAt),
+                  updatedAt: new Date(anime.updatedAt),
+                }}
+              />
             ))}
       </div>
       {data?.length === 0 && (
@@ -82,5 +71,42 @@ export default function Watchlist() {
         </div>
       )}
     </MaxWidthWrapper>
+  );
+}
+
+function AnimeCard({ anime }: { anime: Favorite }) {
+  return (
+    <div className="group relative">
+      <Link href={`/info?anime=${anime.animeId}`}>
+        <div className="aspect-video rounded relative cursor-pointer">
+          <Image src={anime.imgUrl!} alt="box" fill className="object-cover" />
+          <div className="inset-0 opacity-0 group-hover:opacity-100 bg-black/70 z-10 absolute p-2 flex items-center justify-center">
+            <PlayCircle className="h-8 w-8 text-white" />
+          </div>
+        </div>
+        <h3 className="line-clamp-1 mt-2">{getTitle({ text: anime.title })}</h3>
+        {anime.createdAt && (
+          <Badge className="absolute right-0 top-0 rounded">
+            {format(new Date(anime.createdAt), "MMM d, yyy")}
+          </Badge>
+        )}
+      </Link>
+      <div className="absolute right-0 bottom-0 rounded">
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <MoreVertical className="h-4 w-4" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56">
+            <DropdownMenuLabel>{anime.title}</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <Settings className="mr-2 h-4 w-4" />
+              <span>Settings</span>
+              <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    </div>
   );
 }

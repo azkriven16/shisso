@@ -147,7 +147,13 @@ function AnimeCard({ anime }: { anime: IAnimeResult }) {
   return (
     <Link href={`/info?anime=${anime.id}`} className="group relative">
       <div className="aspect-video rounded relative cursor-pointer">
-        <Image src={anime.image!} alt="box" fill className="object-cover" />
+        <Image
+          src={anime.image!}
+          alt="Anime Image"
+          fill
+          quality={50}
+          className="object-cover"
+        />
         <div className="inset-0 opacity-0 group-hover:opacity-100 bg-black/70 z-10 absolute p-2 flex items-center justify-center">
           <PlayCircle className="h-8 w-8 text-white" />
         </div>
@@ -180,6 +186,7 @@ function EpisodeCard({
         <Image
           src={anime?.image! || info?.image!}
           alt="box"
+          quality={50}
           fill
           className={cn("object-cover", !anime?.image && "bg-foreground")}
         />

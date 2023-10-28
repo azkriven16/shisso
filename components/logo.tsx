@@ -27,7 +27,7 @@ export const Logo = () => {
         alt="Logo"
         className="hidden dark:block mb-1"
       />
-      <p className={cn("font-semibold", font.className)}>{siteConfig.name}</p>
+      <p className="font-bold">{siteConfig.name}</p>
     </Link>
   );
 };

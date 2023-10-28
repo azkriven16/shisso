@@ -10,16 +10,19 @@ import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import { Input } from "../ui/input";
 import { useMediaQuery, useDebounce } from "usehooks-ts";
-import { FormEvent, useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useSearch } from "@/lib/anime";
 import { IAnimeResult } from "@/types";
 import { cn, getTitle } from "@/lib/utils";
 import { Skeleton } from "../ui/skeleton";
 import Link from "next/link";
 
-export default function Search() {
+export default function Search({ qProps }: { qProps?: string }) {
   const [isCtrlKPressed, setIsCtrlKPressed] = useState(false);
+  const [query, setQuery] = useState<string>("");
+  const isLg = useMediaQuery("(max-width: 1024px)");
+  const skeletonArray = new Array(4).fill(null);
+  const debounce = useDebounce(query, 500);
 
   const keyDownHandler = (event: KeyboardEvent) => {
     if (event.ctrlKey && event.key === "k") {
@@ -29,17 +32,16 @@ export default function Search() {
   };
 
   useEffect(() => {
+    setIsCtrlKPressed(true);
+    setQuery(qProps || "");
+  }, [qProps]);
+
+  useEffect(() => {
     window.addEventListener("keydown", keyDownHandler);
     return () => {
       window.removeEventListener("keydown", keyDownHandler);
     };
   }, []);
-
-  const [query, setQuery] = useState("");
-
-  const isLg = useMediaQuery("(max-width: 1024px)");
-  const skeletonArray = new Array(4).fill(null);
-  const debounce = useDebounce(query, 500);
 
   const { data, isFetching, isFetched, isError } = useSearch({
     episodeId: debounce,
@@ -48,26 +50,30 @@ export default function Search() {
   return (
     <Dialog open={isCtrlKPressed} onOpenChange={setIsCtrlKPressed}>
       <DialogTrigger asChild>
-        <Button size={isLg ? "icon" : "default"} variant="outline">
-          <SearchIcon className="h-4 w-4 lg:mr-2" />
-          <span className="lg:inline hidden">Search anime... </span>
-          <Badge
-            variant="secondary"
-            className="rounded ml-2 font-mono py-1 lg:inline hidden"
-          >
-            Ctrl K
-          </Badge>
-        </Button>
+        {!qProps && (
+          <Button size={isLg ? "icon" : "default"} variant="outline">
+            <SearchIcon className="h-4 w-4 lg:mr-2" />
+            <span className="lg:inline hidden">Search anime... </span>
+            <Badge
+              variant="secondary"
+              className="rounded ml-2 font-mono py-1 lg:inline hidden"
+            >
+              Ctrl K
+            </Badge>
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="m-0 p-2 h-fit pt-[0.22rem]">
         <div className="flex items-center pl-2.5">
           <SearchIcon className="text-muted-foreground h-5 w-5" />
           <Input
+            id="searchInput"
             className="border-none focus-visible:ring-0 rounded-none"
             placeholder="Search anime..."
             onChange={(e) => {
               setQuery(e.target.value);
             }}
+            value={query}
           />
         </div>
         {isFetched && data?.results?.length === 0 && (
@@ -103,8 +109,8 @@ export default function Search() {
                 href={`/info?anime=${item.id}`}
                 className="w-full flex"
               >
-                <DialogClose>
-                  <Button className="justify-start" variant="ghost">
+                <DialogClose className="w-full">
+                  <Button className="justify-start w-full" variant="ghost">
                     <Badge variant="secondary" className="mr-2">
                       {item?.subOrDub}
                     </Badge>
