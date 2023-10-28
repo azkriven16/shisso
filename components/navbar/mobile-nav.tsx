@@ -25,7 +25,7 @@ export default function MobileNav() {
         <DropdownMenuTrigger>
           <Menu />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-screen h-screen pt-4">
+        <DropdownMenuContent className="w-screen h-screen pt-4 z-[99999]">
           <DropdownMenuLabel className="mt-1">
             <Logo />
           </DropdownMenuLabel>

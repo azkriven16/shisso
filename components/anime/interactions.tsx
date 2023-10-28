@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { cn, getTitle } from "@/lib/utils";
 
 interface InteractionsProps {
-  anime: IAnimeResult;
+  anime: IAnimeResult | undefined;
 }
 
 export default function Interactions({ anime }: InteractionsProps) {
