@@ -1,23 +1,5 @@
-import React from "react";
-
 export default function Comments() {
-  const comments = [
-    {
-      id: 1,
-      user: "User 1",
-      content: "Comment 1 content goes here.",
-    },
-    {
-      id: 2,
-      user: "User 2",
-      content: "Comment 2 content goes here.",
-    },
-    {
-      id: 3,
-      user: "User 3",
-      content: "Comment 3 content goes here.",
-    },
-  ];
+  // const { data: watchlist } = trpc.getUserWatchlist.useQuery();
 
   return (
     <div className="mx-auto mt-8">
@@ -43,3 +25,21 @@ export default function Comments() {
     </div>
   );
 }
+
+const comments = [
+  {
+    id: 1,
+    user: "User 1",
+    content: "Comment 1 content goes here.",
+  },
+  {
+    id: 2,
+    user: "User 2",
+    content: "Comment 2 content goes here.",
+  },
+  {
+    id: 3,
+    user: "User 3",
+    content: "Comment 3 content goes here.",
+  },
+];

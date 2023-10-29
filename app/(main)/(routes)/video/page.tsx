@@ -58,25 +58,31 @@ export default function VideoPage() {
               {getTitle({ text: info?.title })}{" "}
             </h1>
             <div className="self-end flex gap-5">
-              <a href={`/video?anime=${anime}&episode=${prevEpId}`}>
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  disabled={prevEpId === undefined}
+              <Button
+                size="sm"
+                variant="secondary"
+                disabled={prevEpId === undefined}
+              >
+                <a
+                  className="flex items-center"
+                  href={`/video?anime=${anime}&episode=${prevEpId}`}
                 >
                   <ChevronLeft className="w-4 h-4 mr-2" /> prev
-                </Button>
-              </a>
-              <a href={`/video?anime=${anime}&episode=${nextEpId}`}>
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  disabled={nextEpId === undefined}
+                </a>
+              </Button>
+              <Button
+                size="sm"
+                variant="secondary"
+                disabled={nextEpId === undefined}
+              >
+                <a
+                  className="flex items-center"
+                  href={`/video?anime=${anime}&episode=${nextEpId}`}
                 >
                   next
                   <ChevronRight className="w-4 h-4 ml-2" />
-                </Button>
-              </a>
+                </a>
+              </Button>
             </div>
           </div>
           <Interactions anime={info} />

@@ -33,7 +33,7 @@ export default function Search({ qProps }: { qProps?: string }) {
   };
 
   useEffect(() => {
-    if (path === "/info") {
+    if (path === "/info" && qProps) {
       setIsCtrlKPressed(true);
       setQuery(qProps || "");
     }

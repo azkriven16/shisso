@@ -53,6 +53,7 @@ export const appRouter = router({
       const checkDuplicate = await db.favorite.findFirst({
         where: {
           userId,
+          animeId: input.animeId,
         },
       });
 
@@ -60,6 +61,7 @@ export const appRouter = router({
         return await db.favorite.deleteMany({
           where: {
             userId: ctx.userId,
+            animeId: input.animeId,
           },
         });
       } else {
@@ -99,6 +101,7 @@ export const appRouter = router({
       const checkDuplicate = await db.watchlist.findFirst({
         where: {
           userId,
+          animeId: input.animeId,
         },
       });
 
@@ -106,6 +109,7 @@ export const appRouter = router({
         return await db.watchlist.deleteMany({
           where: {
             userId: ctx.userId,
+            animeId: input.animeId,
           },
         });
       } else {

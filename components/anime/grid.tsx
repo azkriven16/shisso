@@ -16,7 +16,7 @@ import {
 import { Button } from "../ui/button";
 import NoItems from "../no-items";
 import { Badge } from "../ui/badge";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 interface GridProps {
   loading: boolean;
   pagination?: string;
@@ -26,7 +26,7 @@ interface GridProps {
   data: IAnimeResult | undefined;
 }
 
-const episodesPerPage = 10; // Adjust the number of episodes to load initially
+const episodesPerPage = 50; // Adjust the number of episodes to load initially
 const initialVisibleEpisodes = episodesPerPage;
 
 export default function Grid({
@@ -177,12 +177,22 @@ function EpisodeCard({
   anime: IAnimeEpisode | undefined;
   info: IAnimeResult | undefined;
 }) {
+  const searchParams = useSearchParams();
+  const episode = searchParams.get("episode");
+
+  const currentEpisode: IAnimeEpisode = info?.episodes?.find(
+    (ep: IAnimeEpisode) => ep.id === episode
+  );
+
   return (
     <Link
       href={`/video?anime=${info?.id}&episode=${anime?.id}`}
       className="group"
     >
-      <Button className="w-full" variant="secondary">
+      <Button
+        className="w-full"
+        variant={currentEpisode?.id === anime?.id ? "default" : "secondary"}
+      >
         <h3 className="line-clamp-1">Episode {anime?.number}</h3>
       </Button>
     </Link>

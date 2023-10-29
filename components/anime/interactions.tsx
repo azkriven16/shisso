@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { Button } from "../ui/button";
-import { Bookmark, Heart } from "lucide-react";
+import { Bookmark, Heart, Loader2 } from "lucide-react";
 import { trpc } from "@/app/_trpc/client";
 import { IAnimeResult } from "@/types";
 import { toast } from "sonner";
@@ -13,8 +13,10 @@ interface InteractionsProps {
 export default function Interactions({ anime }: InteractionsProps) {
   const utils = trpc.useContext();
 
-  const { data: favorite } = trpc.getUserFavorite.useQuery();
-  const { data: watchlist } = trpc.getUserWatchlist.useQuery();
+  const { data: favorite, isLoading: favoriteLoading } =
+    trpc.getUserFavorite.useQuery();
+  const { data: watchlist, isLoading: watchlistLoading } =
+    trpc.getUserWatchlist.useQuery();
   const isFavorite = favorite?.find((id) => id.animeId === anime.id);
   const isWatchList = watchlist?.find((id) => id.animeId === anime.id);
 
@@ -74,7 +76,13 @@ export default function Interactions({ anime }: InteractionsProps) {
         variant="outline"
         className="flex items-center gap-2"
       >
-        <Heart className={cn("", isFavorite && "fill-red-500 text-red-500")} />{" "}
+        {watchlistLoading ? (
+          <Loader2 className="animate-spin" />
+        ) : (
+          <Heart
+            className={cn("", isFavorite && "fill-red-500 text-red-500")}
+          />
+        )}
         Favorite
       </Button>
       <Button
@@ -89,9 +97,13 @@ export default function Interactions({ anime }: InteractionsProps) {
         variant="outline"
         className="flex items-center gap-2"
       >
-        <Bookmark
-          className={cn("", isWatchList && "fill-yellow-500 text-yellow-500")}
-        />{" "}
+        {watchlistLoading ? (
+          <Loader2 className="animate-spin" />
+        ) : (
+          <Bookmark
+            className={cn("", isWatchList && "fill-yellow-500 text-yellow-500")}
+          />
+        )}
         Bookmark
       </Button>
     </div>
