@@ -17,6 +17,7 @@ model User {
 
   Watchlist Watchlist[]
   Favorite  Favorite[]
+  Comment   Comment[]
 }
 
 model Watchlist {
@@ -41,4 +42,11 @@ model Favorite {
   updatedAt DateTime @updatedAt
   User      User?    @relation(fields: [userId], references: [id])
   userId    String
+}
+
+model Comment {
+  id      String @id @default(cuid())
+  userId  String
+  User    User   @relation(fields: [userId], references: [id])
+  comment String
 }
