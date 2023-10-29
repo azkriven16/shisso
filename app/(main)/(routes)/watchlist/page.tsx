@@ -5,14 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getTitle } from "@/lib/utils";
-import {
-  Heart,
-  MoreVertical,
-  PlayCircle,
-  Search,
-  Settings,
-  Trash,
-} from "lucide-react";
+import { Heart, MoreVertical, PlayCircle, Search, Trash } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { format } from "date-fns";
@@ -20,9 +13,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 

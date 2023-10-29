@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { Button } from "../ui/button";
 import { Trash } from "lucide-react";
 import { toast } from "sonner";
+import { format } from "date-fns";
 import AddComment from "./add-comment";
 
 export default function Comments() {
@@ -37,15 +38,15 @@ export default function Comments() {
   });
 
   return (
-    <div className="mx-auto mt-8">
+    <div className="mx-auto mt-8 pb-20">
       <div className="rounded-lg py-4">
         <h2 className="text-lg md:text-xl font-semibold">Comments</h2>
         {user && <AddComment />}
         {allComments?.length ? (
-          allComments.map((comment) => (
+          allComments.reverse().map((comment) => (
             <div
               key={comment.id}
-              className="mt-4 p-4 border-t border flex items-center gap-5 w-full justify-between"
+              className="mt-4 p-4 border-t border flex items-center gap-2 w-full justify-between"
             >
               <div className="flex gap-5">
                 <img
@@ -53,15 +54,22 @@ export default function Comments() {
                   alt="User Avatar"
                   className="w-10 h-10 rounded-full"
                 />
-                <div>
+                <div className="max-h-52 overflow-y-scroll pr-2">
                   <p className="font-semibold">{comment.userName}</p>
                   <p className="text-muted-foreground text-sm">
                     {comment.comment}
                   </p>
+                  <p className="text-muted-foreground text-xs">
+                    {format(new Date(comment.createdAt), "MMM d, yyy")}
+                  </p>
                 </div>
               </div>
               {user?.id === comment.userId && (
-                <Button variant="destructive" size="icon">
+                <Button
+                  variant="destructive"
+                  size="icon"
+                  className="min-w-[40px]"
+                >
                   <Trash
                     onClick={() =>
                       deleteComment({

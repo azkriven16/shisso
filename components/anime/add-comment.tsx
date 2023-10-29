@@ -4,7 +4,7 @@ import { Input } from "../ui/input";
 import Image from "next/image";
 import { trpc } from "@/app/_trpc/client";
 import { FormEvent, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 
@@ -18,7 +18,7 @@ export default function AddComment() {
   const { mutate: addComment } = trpc.addComment.useMutation({
     onSuccess: () => {
       utils.getAllComments.invalidate();
-      toast.success("Comment deleted.");
+      toast.success("Comment added.");
     },
     onMutate: () => {
       utils.getAllComments.invalidate();
