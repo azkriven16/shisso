@@ -3,12 +3,18 @@ import { trpc } from "@/app/_trpc/client";
 import { useUser } from "@clerk/nextjs";
 import { useSearchParams } from "next/navigation";
 import { Button } from "../ui/button";
-import { Trash } from "lucide-react";
+import { MoreVertical, Trash } from "lucide-react";
 import { toast } from "sonner";
 import { format } from "date-fns";
 import AddComment from "./add-comment";
 import Image from "next/image";
 import { Textarea } from "../ui/textarea";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 export default function Comments() {
   const searchParams = useSearchParams();
@@ -102,21 +108,25 @@ export default function Comments() {
                 {comment.comment}
               </Textarea>
               {user?.id === comment.userId && (
-                <Button
-                  variant="destructive"
-                  size="icon"
-                  className="min-w-[40px]"
-                >
-                  <Trash
-                    onClick={() =>
-                      deleteComment({
-                        episodeId: episode,
-                        comment: comment.comment,
-                      })
-                    }
-                    className="w-4 h-4"
-                  />
-                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <MoreVertical className="h-4 w-4" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56">
+                    <DropdownMenuItem
+                      role="button"
+                      onClick={() =>
+                        deleteComment({
+                          episodeId: episode,
+                          comment: comment.comment,
+                        })
+                      }
+                    >
+                      <Trash className="mr-2 h-4 w-4" />
+                      <span>Delete</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               )}
             </div>
           ))

@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getTitle } from "@/lib/utils";
-import { Heart, MoreVertical, PlayCircle, Search, Trash } from "lucide-react";
+import { MoreVertical, PlayCircle, Search, Trash } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { format } from "date-fns";
@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Favorite } from "@prisma/client";
+import { toast } from "sonner";
 
 export default function Watchlist() {
   const { data, isLoading } = trpc.getUserWatchlist.useQuery();
@@ -30,10 +31,6 @@ export default function Watchlist() {
           <p className="text-muted-foreground text-sm md:text-base">
             You have {data?.length || "0"} anime in your watchlist.
           </p>
-        </div>
-
-        <div className="flex items-center">
-          <Search /> <Input placeholder="Search..." />
         </div>
       </div>
       <div className="h-full w-full grid gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-5">
@@ -70,6 +67,26 @@ export default function Watchlist() {
 }
 
 function AnimeCard({ anime }: { anime: Favorite }) {
+  const utils = trpc.useContext();
+
+  const { mutate: removeFromWatchlist } = trpc.addUserWatchlist.useMutation({
+    onSuccess: () => {
+      utils.getUserWatchlist.invalidate();
+      toast.success("Removed from watchlist");
+    },
+    onMutate: () => {
+      utils.getUserWatchlist.invalidate();
+      toast.loading("Loading...");
+    },
+    onSettled: () => {
+      utils.getUserWatchlist.invalidate();
+      toast.dismiss();
+    },
+    onError: (error) => {
+      utils.getUserWatchlist.invalidate();
+      toast.error(`${error.message}`);
+    },
+  });
   return (
     <div className="relative">
       <Link href={`/info?anime=${anime.animeId}`} className="group">
@@ -92,13 +109,19 @@ function AnimeCard({ anime }: { anime: Favorite }) {
             <MoreVertical className="h-4 w-4" />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              role="button"
+              onClick={() =>
+                removeFromWatchlist({
+                  animeId: anime.animeId,
+                  id: anime.id,
+                  imgUrl: anime.imgUrl!,
+                  title: getTitle({ text: anime.title }),
+                })
+              }
+            >
               <Trash className="mr-2 h-4 w-4" />
               <span>Delete</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Heart className="mr-2 h-4 w-4" />
-              <span>Add to favorites</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
