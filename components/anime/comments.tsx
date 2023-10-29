@@ -1,45 +1,84 @@
+"use client";
+import { trpc } from "@/app/_trpc/client";
+import { useUser } from "@clerk/nextjs";
+import { useSearchParams } from "next/navigation";
+import { Button } from "../ui/button";
+import { Trash } from "lucide-react";
+import { toast } from "sonner";
+import AddComment from "./add-comment";
+
 export default function Comments() {
-  // const { data: watchlist } = trpc.getUserWatchlist.useQuery();
+  const searchParams = useSearchParams();
+  const episode = searchParams.get("episode") || "";
+  const utils = trpc.useContext();
+  const { user } = useUser();
+
+  const { data: allComments } = trpc.getAllComments.useQuery({
+    episodeId: episode,
+  });
+
+  const { mutate: deleteComment } = trpc.deleteComment.useMutation({
+    onSuccess: () => {
+      utils.getAllComments.invalidate();
+      toast.success("Comment deleted.");
+    },
+    onMutate: () => {
+      utils.getAllComments.invalidate();
+      toast.loading("Loading...");
+    },
+    onSettled: () => {
+      utils.getAllComments.invalidate();
+      toast.dismiss();
+    },
+    onError: (error) => {
+      utils.getAllComments.invalidate();
+      toast.error(`${error.message}`);
+    },
+  });
 
   return (
     <div className="mx-auto mt-8">
       <div className="rounded-lg py-4">
         <h2 className="text-lg md:text-xl font-semibold">Comments</h2>
-
-        {comments.map((comment) => (
-          <div key={comment.id} className="mt-4 p-4 border-t border">
-            <div className="flex items-center space-x-4">
-              <img
-                src="https://via.placeholder.com/50"
-                alt="User Avatar"
-                className="w-10 h-10 rounded-full"
-              />
-              <div>
-                <p className="font-semibold">{comment.user}</p>
-                <p className="text-muted-foreground">{comment.content}</p>
+        {user && <AddComment />}
+        {allComments?.length ? (
+          allComments.map((comment) => (
+            <div
+              key={comment.id}
+              className="mt-4 p-4 border-t border flex items-center gap-5 w-full justify-between"
+            >
+              <div className="flex gap-5">
+                <img
+                  src={comment.userImg}
+                  alt="User Avatar"
+                  className="w-10 h-10 rounded-full"
+                />
+                <div>
+                  <p className="font-semibold">{comment.userName}</p>
+                  <p className="text-muted-foreground text-sm">
+                    {comment.comment}
+                  </p>
+                </div>
               </div>
+              {user?.id === comment.userId && (
+                <Button variant="destructive" size="icon">
+                  <Trash
+                    onClick={() =>
+                      deleteComment({
+                        episodeId: episode,
+                        comment: comment.comment,
+                      })
+                    }
+                    className="w-4 h-4"
+                  />
+                </Button>
+              )}
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className="text-center py-20">There are currently no comments.</p>
+        )}
       </div>
     </div>
   );
 }
-
-const comments = [
-  {
-    id: 1,
-    user: "User 1",
-    content: "Comment 1 content goes here.",
-  },
-  {
-    id: 2,
-    user: "User 2",
-    content: "Comment 2 content goes here.",
-  },
-  {
-    id: 3,
-    user: "User 3",
-    content: "Comment 3 content goes here.",
-  },
-];

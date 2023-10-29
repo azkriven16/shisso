@@ -5,18 +5,19 @@ import { trpc } from "@/app/_trpc/client";
 import { IAnimeResult } from "@/types";
 import { toast } from "sonner";
 import { cn, getTitle } from "@/lib/utils";
+import { useState } from "react";
 
 interface InteractionsProps {
   anime: IAnimeResult | undefined;
 }
 
 export default function Interactions({ anime }: InteractionsProps) {
+  const [favoriteLoading, setFavoriteLoading] = useState(false);
+  const [watchlistLoading, setWatchlistLoading] = useState(false);
   const utils = trpc.useContext();
 
-  const { data: favorite, isLoading: favoriteLoading } =
-    trpc.getUserFavorite.useQuery();
-  const { data: watchlist, isLoading: watchlistLoading } =
-    trpc.getUserWatchlist.useQuery();
+  const { data: favorite } = trpc.getUserFavorite.useQuery();
+  const { data: watchlist } = trpc.getUserWatchlist.useQuery();
   const isFavorite = favorite?.find((id) => id.animeId === anime.id);
   const isWatchList = watchlist?.find((id) => id.animeId === anime.id);
 
@@ -30,10 +31,12 @@ export default function Interactions({ anime }: InteractionsProps) {
     onMutate: () => {
       utils.getUserFavorite.invalidate();
       toast.loading("Loading...");
+      setFavoriteLoading(true);
     },
     onSettled: () => {
       utils.getUserFavorite.invalidate();
       toast.dismiss();
+      setFavoriteLoading(false);
     },
     onError: (error) => {
       utils.getUserFavorite.invalidate();
@@ -51,10 +54,12 @@ export default function Interactions({ anime }: InteractionsProps) {
     onMutate: () => {
       utils.getUserWatchlist.invalidate();
       toast.loading("Loading...");
+      setWatchlistLoading(true);
     },
     onSettled: () => {
       utils.getUserWatchlist.invalidate();
       toast.dismiss();
+      setWatchlistLoading(false);
     },
     onError: (error) => {
       utils.getUserWatchlist.invalidate();
@@ -76,11 +81,14 @@ export default function Interactions({ anime }: InteractionsProps) {
         variant="outline"
         className="flex items-center gap-2"
       >
-        {watchlistLoading ? (
-          <Loader2 className="animate-spin" />
+        {favoriteLoading ? (
+          <Loader2 className="animate-spin transition-transform ease-in-out duration-500" />
         ) : (
           <Heart
-            className={cn("", isFavorite && "fill-red-500 text-red-500")}
+            className={cn(
+              "transition-transform ease-in-out duration-500",
+              isFavorite && "fill-red-500 text-red-500"
+            )}
           />
         )}
         Favorite

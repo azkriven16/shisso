@@ -2,6 +2,7 @@ import { protectedProcedure, publicProcedure, router } from "./trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "@/db";
 import { z } from "zod";
+import Comments from "../components/anime/comments";
 
 export const appRouter = router({
   authCallback: protectedProcedure.query(async ({ ctx }) => {
@@ -96,6 +97,7 @@ export const appRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      if (!ctx.userId) throw new TRPCError({ code: "UNAUTHORIZED" });
       const { userId } = ctx;
 
       const checkDuplicate = await db.watchlist.findFirst({
@@ -122,6 +124,64 @@ export const appRouter = router({
           },
         });
       }
+    }),
+  getAllComments: protectedProcedure
+    .input(
+      z.object({
+        episodeId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      if (!ctx.userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+      return await db.comment.findMany({
+        where: {
+          episodeId: input.episodeId,
+        },
+      });
+    }),
+
+  deleteComment: protectedProcedure
+    .input(
+      z.object({
+        episodeId: z.string(),
+        comment: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+      return await db.comment.deleteMany({
+        where: {
+          userId: ctx.userId,
+          episodeId: input.episodeId,
+          comment: input.comment,
+        },
+      });
+    }),
+
+  addComment: protectedProcedure
+    .input(
+      z.object({
+        comment: z.string(),
+        episodeId: z.string(),
+        userId: z.string(),
+        userImg: z.string(),
+        userName: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+      return await db.comment.create({
+        data: {
+          comment: input.comment,
+          episodeId: input.episodeId,
+          userImg: input.userImg,
+          userName: input.userName,
+          userId: input.userId,
+        },
+      });
     }),
 });
 
