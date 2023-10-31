@@ -5,6 +5,7 @@ import { SignInButton, useAuth } from "@clerk/nextjs";
 import Link from "next/link";
 import { NavItemsData, siteConfig } from "@/lib/constants";
 import { usePathname } from "next/navigation";
+import { ClerkLoading } from "@clerk/nextjs";
 import MaxWidthWrapper from "../max-width-wrapper";
 import { Logo } from "../logo";
 import { Button, buttonVariants } from "../ui/button";
@@ -12,6 +13,7 @@ import { ModeToggle } from "../mode-toggle";
 import User from "./user";
 import MobileNav from "./mobile-nav";
 import Search from "./search";
+import { Spinner } from "../spinner";
 
 export default function Navbar() {
   const scrolled = useScrollTop();
@@ -82,6 +84,11 @@ export default function Navbar() {
               <User />
             </>
           )}
+          <ClerkLoading>
+            <div className="w-full flex items-center justify-center">
+              <Spinner size="lg" />
+            </div>
+          </ClerkLoading>
           <ModeToggle />
         </div>
       </MaxWidthWrapper>

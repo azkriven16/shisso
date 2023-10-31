@@ -7,6 +7,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@clerk/nextjs";
 import { siteConfig } from "@/lib/constants";
+import { ClerkLoading } from "@clerk/nextjs";
 
 export function Heading() {
   const { isSignedIn, isLoaded } = useAuth();
@@ -20,11 +21,11 @@ export function Heading() {
         A minimalistic anime streaming platform where every detail is designed
         for your ultimate enjoyment.
       </h3>
-      {!isLoaded && (
+      <ClerkLoading>
         <div className="w-full flex items-center justify-center">
           <Spinner size="lg" />
         </div>
-      )}
+      </ClerkLoading>
 
       {isSignedIn && isLoaded && (
         <Button asChild>
