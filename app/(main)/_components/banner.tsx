@@ -14,7 +14,6 @@ export default function Banner({ data }: BannerProps) {
           src={data?.image!}
           height={500}
           width={500}
-          quality={50}
           alt="Banner"
           className="z-10 aspect-video object-contain absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
         />
