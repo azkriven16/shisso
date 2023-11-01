@@ -6,13 +6,13 @@ import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 
 export const metadata: Metadata = {
-  title: "Favorites",
+  title: "Watchlist",
 };
 export default async function Layout({ children }: { children: ReactNode }) {
   const { userId } = auth();
 
   if (!userId) {
-    return <Unauthorized page="favorites" img="/park.png" />;
+    return <Unauthorized page="watchlist" img="/support.png" />;
   }
 
   const dbUser = await db.user.findFirst({

@@ -112,7 +112,7 @@ export default function Interactions({ anime }: InteractionsProps) {
             className={cn("", isWatchList && "fill-yellow-500 text-yellow-500")}
           />
         )}
-        Bookmark
+        Watchlist
       </Button>
     </div>
   );

@@ -9,7 +9,6 @@ import { ClerkLoading } from "@clerk/nextjs";
 import MaxWidthWrapper from "../max-width-wrapper";
 import { Logo } from "../logo";
 import { Button, buttonVariants } from "../ui/button";
-import { ModeToggle } from "../mode-toggle";
 import User from "./user";
 import MobileNav from "./mobile-nav";
 import Search from "./search";
@@ -29,42 +28,37 @@ export default function Navbar() {
       )}
     >
       <MaxWidthWrapper className="flex items-center justify-between">
-        {!isSignedIn && <Logo />}
-        {isSignedIn && (
-          <>
-            <div className="flex items-center">
-              <div className="mr-2 md:mr-3 lg:mr-5">
-                <div className="hidden md:inline-block">
-                  <Logo />
-                </div>
-                <div className="md:hidden inline-block">
-                  <MobileNav />
-                </div>
-              </div>
-              {NavItemsData.map((item) => (
-                <Link
-                  key={item.href}
-                  className={cn(
-                    buttonVariants({
-                      variant: path === item.href ? "secondary" : "ghost",
-                    }),
-                    "hidden md:inline-flex mx-0.5"
-                  )}
-                  href={item.href}
-                >
-                  <span className="font-semibold">{item.text}</span>
-                </Link>
-              ))}
+        <div className="flex items-center">
+          <div className="mr-2 md:mr-3 lg:mr-5">
+            <div className="hidden md:inline-block">
+              <Logo />
             </div>
-          </>
-        )}
+            <div className="md:hidden inline-block">
+              <MobileNav />
+            </div>
+          </div>
+          {NavItemsData.map((item) => (
+            <Link
+              key={item.href}
+              className={cn(
+                buttonVariants({
+                  variant: path === item.href ? "secondary" : "ghost",
+                }),
+                "hidden md:inline-flex mx-0.5"
+              )}
+              href={item.href}
+            >
+              <span className="font-semibold">{item.text}</span>
+            </Link>
+          ))}
+        </div>
 
         <div className="flex items-center gap-x-2 md:gap-x-5">
-          {isSignedIn && <Search />}
+          <Search />
           {!isSignedIn && isLoaded && (
             <>
               <SignInButton mode="modal">
-                <Button variant="ghost" size="sm">
+                <Button variant="outline" size="sm">
                   Log in
                 </Button>
               </SignInButton>
@@ -89,7 +83,6 @@ export default function Navbar() {
               <Spinner size="lg" />
             </div>
           </ClerkLoading>
-          <ModeToggle />
         </div>
       </MaxWidthWrapper>
     </nav>

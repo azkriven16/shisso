@@ -51,7 +51,7 @@ export default function Favorites() {
       {data?.length === 0 && (
         <div className="flex items-center justify-center flex-col">
           <Image
-            src="/surprise-box.png"
+            src="/empty-box.png"
             height={300}
             width={300}
             className="object-contain dark:invert"

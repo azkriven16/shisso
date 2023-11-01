@@ -55,9 +55,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        variables: {
+          colorPrimary: "#000000",
+        },
+      }}
+    >
       <html lang="en" suppressHydrationWarning>
-        <body className={cn("antialiased", inter.className)}>
+        <body className={cn("antialiased light", inter.className)}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

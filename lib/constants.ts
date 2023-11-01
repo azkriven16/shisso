@@ -5,7 +5,8 @@ export const siteConfig = {
   url: "shisso.vercel.app",
   links: {
     twitter: "https://twitter.com/EugerBonete",
-    github: "https://github.com/EugerBonete/netflixanime",
+    github: "https://github.com/EugerBonete/",
+    project: "https://github.com/EugerBonete/shisso",
   },
 };
 

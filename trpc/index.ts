@@ -8,7 +8,7 @@ export const appRouter = router({
   authCallback: protectedProcedure.query(async ({ ctx }) => {
     const { userId } = ctx;
     if (!userId) {
-      throw new TRPCError({ code: "UNAUTHORIZED" });
+      throw new TRPCError({ code: "UNAUTHORIZED", message: "Please login" });
     }
 
     // check if user is in db
@@ -30,7 +30,8 @@ export const appRouter = router({
     return { success: true };
   }),
   getUserFavorite: protectedProcedure.query(async ({ ctx }) => {
-    if (!ctx.userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+    if (!ctx.userId)
+      throw new TRPCError({ code: "UNAUTHORIZED", message: "Please login" });
 
     return await db.favorite.findMany({
       where: {
@@ -78,7 +79,8 @@ export const appRouter = router({
     }),
 
   getUserWatchlist: protectedProcedure.query(async ({ ctx }) => {
-    if (!ctx.userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+    if (!ctx.userId)
+      throw new TRPCError({ code: "UNAUTHORIZED", message: "Please login" });
 
     return await db.watchlist.findMany({
       where: {
@@ -97,7 +99,8 @@ export const appRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      if (!ctx.userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+      if (!ctx.userId)
+        throw new TRPCError({ code: "UNAUTHORIZED", message: "Please login" });
       const { userId } = ctx;
 
       const checkDuplicate = await db.watchlist.findFirst({
@@ -132,7 +135,8 @@ export const appRouter = router({
       })
     )
     .query(async ({ ctx, input }) => {
-      if (!ctx.userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+      if (!ctx.userId)
+        throw new TRPCError({ code: "UNAUTHORIZED", message: "Please login" });
 
       return await db.comment.findMany({
         where: {
@@ -149,7 +153,8 @@ export const appRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      if (!ctx.userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+      if (!ctx.userId)
+        throw new TRPCError({ code: "UNAUTHORIZED", message: "Please login" });
 
       return await db.comment.deleteMany({
         where: {
@@ -171,7 +176,8 @@ export const appRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      if (!ctx.userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+      if (!ctx.userId)
+        throw new TRPCError({ code: "UNAUTHORIZED", message: "Please login" });
 
       return await db.comment.create({
         data: {

@@ -2,7 +2,6 @@
 import { trpc } from "@/app/_trpc/client";
 import MaxWidthWrapper from "@/components/max-width-wrapper";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getTitle } from "@/lib/utils";
 import { MoreVertical, PlayCircle, Search, Trash } from "lucide-react";
@@ -51,7 +50,7 @@ export default function Watchlist() {
       {data?.length === 0 && (
         <div className="flex items-center justify-center flex-col">
           <Image
-            src="/surprise-box.png"
+            src="/empty-box.png"
             height={300}
             width={300}
             className="object-contain dark:invert"
