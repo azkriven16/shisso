@@ -13,7 +13,7 @@ export const Logo = () => {
   return (
     <Link
       href="/"
-      className={cn("flex items-center gap-2 font-semibold", font.style)}
+      className={cn("flex items-center mt-1 gap-2 font-semibold", font.style)}
     >
       <Image
         src="/logo.svg"

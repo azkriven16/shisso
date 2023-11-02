@@ -23,7 +23,6 @@ export default function Navbar() {
       className={cn(
         "fixed top-0 w-full bg-background z-50",
         scrolled && "border-b shadow-sm",
-        path !== "/" && "border-b",
         path === "/video" && "z-[99999]"
       )}
     >
