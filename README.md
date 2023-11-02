@@ -12,7 +12,7 @@ Fullstack notion-themed anime website where you can watch & stream anime.
 
 ## Overview
 
-![Shisso Screenshot](/shisso.png)
+![Shisso Screenshot](public/shisso.png)
 
 ### Built With
 
