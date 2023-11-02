@@ -63,7 +63,7 @@ export default function RootLayout({
       }}
     >
       <html lang="en" suppressHydrationWarning>
-        <body className={cn("antialiased light", inter.className)}>
+        <body className={cn("antialiased", inter.className)}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

@@ -15,7 +15,10 @@ export function Heading() {
   return (
     <div className="max-w-3xl space-y-4 text-center">
       <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold">
-        No distractions, just pure anime
+        No distractions, just pure{" "}
+        <span className="underline">
+          <Link href="/new">anime</Link>
+        </span>
       </h1>
       <h3 className="text-base sm:text-xl md:text-2xl font-medium md:px-10">
         A minimalistic anime streaming platform where every detail is designed
@@ -28,8 +31,8 @@ export function Heading() {
       </ClerkLoading>
 
       {isSignedIn && isLoaded && (
-        <Button asChild>
-          <Link href="/dashboard">
+        <Button size="lg" asChild>
+          <Link href="/dashboard" className="font-semibold">
             Enter {siteConfig.name}
             <ArrowRight className="h-4 w-4 ml-2" />
           </Link>
@@ -38,8 +41,8 @@ export function Heading() {
 
       {!isSignedIn && isLoaded && (
         <SignInButton mode="modal">
-          <Button>
-            Get {siteConfig.name} <ArrowRight className="h-4 w-4 ml-2" />
+          <Button size="lg" className="font-semibold">
+            Get {siteConfig.name} free <ArrowRight className="h-4 w-4 ml-2" />
           </Button>
         </SignInButton>
       )}

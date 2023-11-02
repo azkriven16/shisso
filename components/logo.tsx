@@ -1,9 +1,8 @@
 import Image from "next/image";
 import { Poppins } from "next/font/google";
 
-import { cn } from "@/lib/utils";
-import { siteConfig } from "@/lib/constants";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 const font = Poppins({
   subsets: ["latin"],
@@ -12,26 +11,26 @@ const font = Poppins({
 
 export const Logo = () => {
   return (
-    <Link href="/" className="flex items-center font-semibold">
+    <Link
+      href="/"
+      className={cn("flex items-center gap-2 font-semibold", font.style)}
+    >
       <Image
         src="/logo.svg"
         height="18"
         width="18"
         alt="Logo"
-        className="dark:hidden mb-1"
+        quality={100}
+        className="border-b-2 rounded-lg p-0.5 border-black"
       />
-      <Image
-        src="/logo-dark.svg"
-        height="18"
-        width="18"
-        alt="Logo"
-        className="hidden dark:block mb-1"
-      />
-      <span>h</span>
-      <span>i</span>
-      <span>s</span>
-      <span>s</span>
-      <span>o</span>
+      <div>
+        <span>S</span>
+        <span>h</span>
+        <span>i</span>
+        <span>s</span>
+        <span>s</span>
+        <span>o</span>
+      </div>
     </Link>
   );
 };
