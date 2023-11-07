@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "Shisso",
+  name: "Shissu",
   description:
     "An open source Netflix clone application built using the new router, server components and everything new in Next.js 13.",
   url: "shisso.vercel.app",
